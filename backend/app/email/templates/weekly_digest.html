@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+        .content {
+            padding: 30px;
+        }
+        .profile-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+        .score-change {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .score-up { background: #d4edda; color: #155724; }
+        .score-down { background: #f8d7da; color: #721c24; }
+        .score-neutral { background: #e2e3e5; color: #383d41; }
+        .button {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            margin-top: 20px;
+        }
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #6c757d;
+        }
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-right: 8px;
+        }
+        h2 { color: #333; margin-top: 0; }
+        h3 { color: #667eea; margin-bottom: 10px; }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .stat-box {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+        }
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        .stat-label {
+            font-size: 12px;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 GitHub Intelligence Weekly</h1>
+            <p>Your portfolio updates for {{ week_range }}</p>
+        </div>
+        
+        <div class="content">
+            <h2>Hello {{ username }}! 👋</h2>
+            <p>Here's your weekly GitHub portfolio summary:</p>
+            
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-value">{{ total_profiles }}</div>
+                    <div class="stat-label">Tracked Profiles</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value">{{ total_changes }}</div>
+                    <div class="stat-label">Score Changes</div>
+                </div>
+            </div>
+            
+            {% for profile in profiles %}
+            <div class="profile-card">
+                <h3>
+                    <a href="http://localhost:5173/?user={{ profile.username }}" style="color: #667eea; text-decoration: none;">
+                        @{{ profile.username }}
+                    </a>
+                </h3>
+                
+                <div style="margin: 15px 0;">
+                    <span class="badge">Current Score: {{ profile.current_score }}/100</span>
+                    {% if profile.score_change > 0 %}
+                    <span class="score-change score-up">▲ +{{ profile.score_change }} points</span>
+                    {% elif profile.score_change < 0 %}
+                    <span class="score-change score-down">▼ {{ profile.score_change }} points</span>
+                    {% else %}
+                    <span class="score-change score-neutral">◆ No change</span>
+                    {% endif %}
+                </div>
+                
+                {% if profile.new_repos %}
+                <div style="margin: 10px 0;">
+                    <strong>📦 New Repositories ({{ profile.new_repos|length }}):</strong>
+                    <ul style="margin: 5px 0 0 20px;">
+                        {% for repo in profile.new_repos[:3] %}
+                        <li><a href="{{ repo.url }}" style="color: #28a745;">{{ repo.name }}</a> - ⭐ {{ repo.stars }}</li>
+                        {% endfor %}
+                        {% if profile.new_repos|length > 3 %}
+                        <li>... and {{ profile.new_repos|length - 3 }} more</li>
+                        {% endif %}
+                    </ul>
+                </div>
+                {% endif %}
+                
+                {% if profile.top_achievement %}
+                <div style="margin-top: 10px; padding: 8px; background: #fff3cd; border-radius: 6px;">
+                    🏆 <strong>Top Achievement:</strong> {{ profile.top_achievement }}
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            
+            <div style="text-align: center;">
+                <a href="http://localhost:5173/dashboard" class="button">View Full Dashboard →</a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>You're receiving this because you have email notifications enabled for saved profiles.</p>
+            <p><a href="http://localhost:5173/settings" style="color: #667eea;">Manage notification settings</a> | 
+               <a href="http://localhost:5173/unsubscribe" style="color: #667eea;">Unsubscribe</a></p>
+            <p>&copy; 2024 GitHub Intelligence Engine</p>
+        </div>
+    </div>
+</body>
+</html>

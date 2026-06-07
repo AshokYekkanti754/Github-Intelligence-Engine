@@ -1,0 +1,387 @@
+[33mcommit 8e16ccaef84b8e62f96ab5f23668b2ef42b7d43e[m
+Author: AshokYekkanti754 <ashokyekkanti737@gmail.com>
+Date:   Sat Jun 6 13:00:18 2026 +0530
+
+    Initial commit: GitHub Intelligence Engine (secrets excluded)
+
+[1mdiff --git a/.gitignore b/.gitignore[m
+[1mnew file mode 100644[m
+[1mindex 0000000..d7a0ad1[m
+Binary files /dev/null and b/.gitignore differ
+[1mdiff --git a/LICENSE b/LICENSE[m
+[1mnew file mode 100644[m
+[1mindex 0000000..e69de29[m
+[1mdiff --git a/README.md b/README.md[m
+[1mnew file mode 100644[m
+[1mindex 0000000..e69de29[m
+[1mdiff --git a/backend/.env b/backend/.env[m
+[1mnew file mode 100644[m
+[1mindex 0000000..ca41d0a[m
+[1m--- /dev/null[m
+[1m+++ b/backend/.env[m
+[36m@@ -0,0 +1,19 @@[m
+[32m+[m[32m# GitHub API[m
+[32m+[m[32mGITHUB_TOKEN=yourgithub-token[m
+[32m+[m
+[32m+[m[32m# OpenAI API[m
+[32m+[m[32mOPENAI_API_KEY=your open-apikey[m
+[32m+[m
+[32m+[m[32m# Database (PostgreSQL)[m
+[32m+[m[32mDATABASE_URL=postgresql://postgres:postgres@yourhost/github_intelligence[m
+[32m+[m
+[32m+[m[32m# Redis[m
+[32m+[m[32mREDIS_URL=redis://localhost:xxxx[m
+[32m+[m
+[32m+[m[32m# JWT[m
+[32m+[m[32mSECRET_KEY=your secrte keyL[m
+[32m+[m[32mALGORITHM=XXXXX[m
+[32m+[m
+[32m+[m[32m# OAuth specific (add these)[m
+[32m+[m[32mGITHUB_CLIENT_ID=client-id[m
+[32m+[m[32mGITHUB_CLIENT_SECRET=client-secret[m
+\ No newline at end of file[m
+[1mdiff --git a/backend/.env.example b/backend/.env.example[m
+[1mnew file mode 100644[m
+[1mindex 0000000..b21b440[m
+[1m--- /dev/null[m
+[1m+++ b/backend/.env.example[m
+[36m@@ -0,0 +1,37 @@[m
+[32m+[m[32m# backend/.env.example[m
+[32m+[m[32m# Copy this file to .env and fill in your actual values[m
+[32m+[m[32m# NEVER commit .env to git![m
+[32m+[m
+[32m+[m[32m# ============ REQUIRED - GitHub OAuth ============[m
+[32m+[m[32m# Get these from: https://github.com/settings/developers[m
+[32m+[m[32mGITHUB_CLIENT_ID=your_github_client_id_here[m
+[32m+[m[32mGITHUB_CLIENT_SECRET=your_github_client_secret_here[m
+[32m+[m[32mGITHUB_TOKEN=ghp_your_personal_access_token_here[m
+[32m+[m
+[32m+[m[32m# ============ REQUIRED - OpenAI API ============[m
+[32m+[m[32m# Get from: https://platform.openai.com/api-keys[m
+[32m+[m[32mOPENAI_API_KEY=sk-proj_your_openai_api_key_here[m
+[32m+[m
+[32m+[m[32m# ============ REQUIRED - Database ============[m
+[32m+[m[32m# For local PostgreSQL[m
+[32m+[m[32mDATABASE_URL=postgresql://postgres:postgres@localhost:5432/github_intelligence[m
+[32m+[m
+[32m+[m[32m# ============ REQUIRED - JWT Security ============[m
+[32m+[m[32m# Generate with: openssl rand -hex 32[m
+[32m+[m[32mSECRET_KEY=change_this_to_a_random_32_character_string_here[m
+[32m+[m[32mALGORITHM=HS256[m
+[32m+[m
+[32m+[m[32m# ============ OPTIONAL - Email Notifications ============[m
+[32m+[m[32m# For Gmail[m
+[32m+[m[32mSMTP_HOST=smtp.gmail.com[m
+[32m+[m[32mSMTP_PORT=587[m
+[32m+[m[32mSMTP_USER=your_email@gmail.com[m
+[32m+[m[32mSMTP_PASSWORD=your_app_specific_password[m
+[32m+[m[32mFROM_EMAIL=noreply@github-intelligence.com[m
+[32m+[m[32mFROM_NAME=GitHub Intelligence Engine[m
+[32m+[m[32mSMTP_USE_TLS=true[m
+[32m+[m
+[32m+[m[32m# ============ OPTIONAL - Development Settings ============[m
+[32m+[m[32mDEBUG=false[m
+[32m+[m[32mMOCK_MODE=false[m
+[32m+[m[32mSQL_ECHO=false[m
+\ No newline at end of file[m
+[1mdiff --git a/backend/.gitignore b/backend/.gitignore[m
+[1mnew file mode 100644[m
+[1mindex 0000000..e69de29[m
+[1mdiff --git a/backend/Dockerfile b/backend/Dockerfile[m
+[1mnew file mode 100644[m
+[1mindex 0000000..e69de29[m
+[1mdiff --git a/backend/__pycache__/main.cpython-314.pyc b/backend/__pycache__/main.cpython-314.pyc[m
+[1mnew file mode 100644[m
+[1mindex 0000000..0b08ae3[m
+Binary files /dev/null and b/backend/__pycache__/main.cpython-314.pyc differ
+[1mdiff --git a/backend/app/__init__.py b/backend/app/__init__.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..e69de29[m
+[1mdiff --git a/backend/app/__pycache__/__init__.cpython-314.pyc b/backend/app/__pycache__/__init__.cpython-314.pyc[m
+[1mnew file mode 100644[m
+[1mindex 0000000..8c38e35[m
+Binary files /dev/null and b/backend/app/__pycache__/__init__.cpython-314.pyc differ
+[1mdiff --git a/backend/app/ai/__init__.py b/backend/app/ai/__init__.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..e69de29[m
+[1mdiff --git a/backend/app/ai/__pycache__/__init__.cpython-314.pyc b/backend/app/ai/__pycache__/__init__.cpython-314.pyc[m
+[1mnew file mode 100644[m
+[1mindex 0000000..4618679[m
+Binary files /dev/null and b/backend/app/ai/__pycache__/__init__.cpython-314.pyc differ
+[1mdiff --git a/backend/app/ai/__pycache__/llm_client.cpython-314.pyc b/backend/app/ai/__pycache__/llm_client.cpython-314.pyc[m
+[1mnew file mode 100644[m
+[1mindex 0000000..f7d323a[m
+Binary files /dev/null and b/backend/app/ai/__pycache__/llm_client.cpython-314.pyc differ
+[1mdiff --git a/backend/app/ai/__pycache__/prompts.cpython-314.pyc b/backend/app/ai/__pycache__/prompts.cpython-314.pyc[m
+[1mnew file mode 100644[m
+[1mindex 0000000..722c468[m
+Binary files /dev/null and b/backend/app/ai/__pycache__/prompts.cpython-314.pyc differ
+[1mdiff --git a/backend/app/ai/analyzers.py b/backend/app/ai/analyzers.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..e69de29[m
+[1mdiff --git a/backend/app/ai/llm_client.py b/backend/app/ai/llm_client.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..21c112c[m
+[1m--- /dev/null[m
+[1m+++ b/backend/app/ai/llm_client.py[m
+[36m@@ -0,0 +1,137 @@[m
+[32m+[m[32mimport openai[m
+[32m+[m[32mimport os[m
+[32m+[m[32mfrom typing import Dict, Any, List[m
+[32m+[m[32mimport json[m
+[32m+[m[32mfrom dotenv import load_dotenv[m
+[32m+[m
+[32m+[m[32mload_dotenv()[m
+[32m+[m
+[32m+[m[32m# Initialize OpenAI[m
+[32m+[m[32mopenai.api_key = os.getenv('OPENAI_API_KEY')[m
+[32m+[m
+[32m+[m[32mclass LLMClient:[m
+[32m+[m[32m    def __init__(self):[m
+[32m+[m[32m        self.model = "gpt-3.5-turbo"  # You can use "gpt-4" if you have access[m
+[32m+[m[41m        [m
+[32m+[m[32m    async def generate_profile_insights(self, user_data: Dict, repos: List,[m[41m [m
+[32m+[m[32m                                         portfolio_score: int, top_languages: List,[m
+[32m+[m[32m                                         top_repos: List) -> Dict[str, Any]:[m
+[32m+[m[32m        """Generate AI insights for a GitHub profile"""[m
+[32m+[m[41m        [m
+[32m+[m[32m        from app.ai.prompts import get_profile_analysis_prompt[m
+[32m+[m[41m        [m
+[32m+[m[32m        # Prepare data for prompt[m
+[32m+[m[32m        username = user_data.get('login', '')[m
+[32m+[m[32m        name = user_data.get('name', '')[m
+[32m+[m[32m        bio = user_data.get('bio', '')[m
+[32m+[m[32m        public_repos = user_data.get('public_repos', 0)[m
+[32m+[m[32m        followers = user_data.get('followers', 0)[m
+[32m+[m[32m        following = user_data.get('following', 0)[m
+[32m+[m[32m        total_stars = sum(repo.get('stargazers_count', 0) for repo in repos)[m
+[32m+[m[41m        [m
+[32m+[m[32m        # Get prompt[m
+[32m+[m[32m        prompt = get_profile_analysis_prompt([m
+[32m+[m[32m            username, name, bio, public_repos, followers,[m[41m [m
+[32m+[m[32m            following, total_stars, top_languages, top_repos[m
+[32m+[m[32m        )[m
+[32m+[m[41m        [m
+[32m+[m[32m        try:[m
+[32m+[m[32m            # Call OpenAI API[m
+[32m+[m[32m            response = openai.ChatCompletion.create([m
+[32m+[m[32m                model=self.model,[m
+[32m+[m[32m                messages=[[m
+[32m+[m[32m                    {"role": "system", "content": "You are an expert GitHub portfolio analyzer. Always respond with valid JSON."},[m
+[32m+[m[32m                    {"role": "user", "content": prompt}[m
+[32m+[m[32m                ],[m
+[32m+[m[32m                temperature=0.7,[m
+[32m+[m[32m                max_tokens=500[m
+[32m+[m[32m            )[m
+[32m+[m[41m            [m
+[32m+[m[32m            # Parse the response[m
+[32m+[m[32m            content = response.choices[0].message.content[m
+[32m+[m[32m            # Try to extract JSON from the response[m
+[32m+[m[32m            import re[m
+[32m+[m[32m            json_match = re.search(r'\{.*\}', content, re.DOTALL)[m
+[32m+[m[32m            if json_match:[m
+[32m+[m[32m                insights = json.loads(json_match.group())[m
+[32m+[m[32m            else:[m
+[32m+[m[32m                insights = json.loads(content)[m
+[32m+[m[41m            [m
+[32m+[m[32m            return insights[m
+[32m+[m[41m            [m
+[32m+[m[32m        except Exception as e:[m
+[32m+[m[32m            print(f"OpenAI API error: {e}")[m
+[32m+[m[32m            # Fallback insights if API fails[m
+[32m+[m[32m            return self._get_fallback_insights(portfolio_score, top_languages)[m
+[32m+[m[41m    [m
+[32m+[m[32m    async def generate_repo_analysis(self, repo: Dict) -> str:[m
+[32m+[m[32m        """Generate analysis for a single repository"""[m
+[32m+[m[41m        [m
+[32m+[m[32m        from app.ai.prompts import get_repo_analysis_prompt[m
+[32m+[m[41m        [m
+[32m+[m[32m        prompt = get_repo_analysis_prompt([m
+[32m+[m[32m            repo.get('name', ''),[m
+[32m+[m[32m            repo.get('description', ''),[m
+[32m+[m[32m            repo.get('stars', 0),[m
+[32m+[m[32m            repo.get('forks', 0),[m
+[32m+[m[32m            repo.get('language', 'Unknown'),[m
+[32m+[m[32m            repo.get('has_wiki', False)[m
+[32m+[m[32m        )[m
+[32m+[m[41m        [m
+[32m+[m[32m        try:[m
+[32m+[m[32m            response = openai.ChatCompletion.create([m
+[32m+[m[32m                model=self.model,[m
+[32m+[m[32m                messages=[[m
+[32m+[m[32m                    {"role": "system", "content": "You are a code reviewer and mentor."},[m
+[32m+[m[32m                    {"role": "user", "content": prompt}[m
+[32m+[m[32m                ],[m
+[32m+[m[32m                temperature=0.7,[m
+[32m+[m[32m                max_tokens=300[m
+[32m+[m[32m            )[m
+[32m+[m[41m            [m
+[32m+[m[32m            return response.choices[0].message.content[m
+[32m+[m[41m            [m
+[32m+[m[32m        except Exception as e:[m
+[32m+[m[32m            print(f"OpenAI API error for repo analysis: {e}")[m
+[32m+[m[32m            return "AI analysis temporarily unavailable. Check your OpenAI API key."[m
+[32m+[m[41m    [m
+[32m+[m[32m    def _get_fallback_insights(self, portfolio_score: int, top_languages: List) -> Dict:[m
+[32m+[m[32m        """Fallback insights when OpenAI API fails"""[m
+[32m+[m[41m        [m
+[32m+[m[32m        if portfolio_score >= 80:[m
+[32m+[m[32m            strengths = ["High-quality projects", "Strong community engagement", "Consistent contributions"][m
+[32m+[m[32m            weaknesses = ["Could increase documentation", "Consider more diverse projects"][m
+[32m+[m[32m            recommendations = ["Write more tutorials", "Contribute to popular open source projects"][m
+[32m+[m[32m            skill_level = "Expert"[m
+[32m+[m[32m            career_advice = "You're ready for senior roles. Start mentoring others."[m
+[32m+[m[32m        elif portfolio_score >= 60:[m
+[32m+[m[32m            strengths = ["Good project variety", "Active contributor", "Solid foundation"][m
+[32m+[m[32m            weaknesses = ["Inconsistent activity", "Limited documentation"][m
+[32m+[m[32m            recommendations = ["Improve README files", "Add more comments to code"][m
+[32m+[m[32m            skill_level = "Intermediate"[m
+[32m+[m[32m            career_advice = "Keep building. Consider contributing to open source."[m
+[32m+[m[32m        elif portfolio_score >= 40:[m
+[32m+[m[32m            strengths = ["Getting started with GitHub", "Has some projects"][m
+[32m+[m[32m            weaknesses = ["Low activity", "Few followers", "Limited project variety"][m
+[32m+[m[32m            recommendations = ["Create more projects", "Engage with community", "Improve documentation"][m
+[32m+[m[32m            skill_level = "Beginner"[m
+[32m+[m[32m            career_advice = "Focus on learning fundamentals and building projects."[m
+[32m+[m[32m        else:[m
+[32m+[m[32m            strengths = ["Starting their GitHub journey"][m
+[32m+[m[32m            weaknesses = ["Profile needs more activity", "Few repositories"][m
+[32m+[m[32m            recommendations = ["Create first repository", "Learn Git basics", "Follow coding tutorials"][m
+[32m+[m[32m            skill_level = "Beginner"[m
+[32m+[m[32m            career_advice = "Start with small projects and build consistency."[m
+[32m+[m[41m        [m
+[32m+[m[32m        best_project = "Your most popular project based on stars"[m
+[32m+[m[32m        summary = f"This developer has a {skill_level.lower()} level profile with a score of {portfolio_score}/100. Primary technologies include {', '.join(top_languages[:3]) if top_languages else 'various languages'}."[m
+[32m+[m[41m        [m
+[32m+[m[32m        return {[m
+[32m+[m[32m            "strengths": strengths,[m
+[32m+[m[32m            "weaknesses": weaknesses,[m
+[32m+[m[32m            "recommendations": recommendations,[m
+[32m+[m[32m            "skill_level": skill_level,[m
+[32m+[m[32m            "best_project": best_project,[m
+[32m+[m[32m            "career_advice": career_advice,[m
+[32m+[m[32m            "summary": summary[m
+[32m+[m[32m        }[m
+\ No newline at end of file[m
+[1mdiff --git a/backend/app/ai/prompts.py b/backend/app/ai/prompts.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..16f213f[m
+[1m--- /dev/null[m
+[1m+++ b/backend/app/ai/prompts.py[m
+[36m@@ -0,0 +1,102 @@[m
+[32m+[m[32m# AI Prompts for GitHub analysis[m
+[32m+[m
+[32m+[m[32mdef get_profile_analysis_prompt(username: str, name: str, bio: str,[m[41m [m
+[32m+[m[32m                                  public_repos: int, followers: int,[m[41m [m
+[32m+[m[32m                                  following: int, total_stars: int,[m
+[32m+[m[32m                                  top_languages: list, top_repos: list) -> str:[m
+[32m+[m[32m    """Generate prompt for profile analysis"""[m
+[32m+[m[41m    [m
+[32m+[m[32m    repos_text = ""[m
+[32m+[m[32m    for i, repo in enumerate(top_repos[:3], 1):[m
+[32m+[m[32m        repos_text += f"{i}. {repo['name']} - {repo['stars']} stars, {repo['forks']} forks, Language: {repo['language']}\n"[m
+[32m+[m[41m    [m
+[32m+[m[32m    languages_text = ", ".join(top_languages) if top_languages else "Not enough data"[m
+[32m+[m[41m    [m
+[32m+[m[32m    prompt = f"""You are an expert GitHub portfolio analyzer. Analyze this developer's GitHub profile and provide insights.[m
+[32m+[m
+[32m+[m[32mDeveloper Information:[m
+[32m+[m[32m- Username: {username}[m
+[32m+[m[32m- Name: {name if name else 'Not provided'}[m
+[32m+[m[32m- Bio: {bio if bio else 'No bio provided'}[m
+[32m+[m[32m- Public Repositories: {public_repos}[m
+[32m+[m[32m- Followers: {followers}[m
+[32m+[m[32m- Following: {following}[m
+[32m+[m[32m- Total Stars Across Repos: {total_stars}[m
+[32m+[m
+[32m+[m[32mTop Languages: {languages_text}[m
+[32m+[m
+[32m+[m[32mTop Repositories:[m
+[32m+[m[32m{repos_text}[m
+[32m+[m
+[32m+[m[32mPlease provide a JSON response with the following structure:[m
+[32m+[m[32m{{[m
+[32m+[m[32m    "strengths": ["strength1", "strength2", "strength3"],[m
+[32m+[m[32m    "weaknesses": ["weakness1", "weakness2"],[m
+[32m+[m[32m    "recommendations": ["recommendation1", "recommendation2", "recommendation3"],[m
+[32m+[m[32m    "skill_level": "Beginner/Intermediate/Advanced/Expert",[m
+[32m+[m[32m    "best_project": "name of best project with explanation",[m
+[32m+[m[32m    "career_advice": "Specific career advice based on their profile",[m
+[32m+[m[32m    "summary": "One paragraph summary of this developer"[m
+[32m+[m[32m}}[m
+[32m+[m
+[32m+[m[32mBase your analysis on:[m
+[32m+[m[32m1. Repository quality and popularity (stars/forks)[m
+[32m+[m[32m2. Language diversity and technology stack[m
+[32m+[m[32m3. Community engagement (followers)[m
+[32m+[m[32m4. Profile completeness[m
+[32m+[m[32m5. Open source contribution patterns[m
+[32m+[m
+[32m+[m[32mBe honest but constructive. If the profile is new/low activity, acknowledge it and provide growth advice."""[m
+[32m+[m[41m    [m
+[32m+[m[32m    return prompt[m
+[32m+[m
+[32m+[m
+[32m+[m[32mdef get_repo_analysis_prompt(repo_name: str, description: str, stars: int,[m[41m [m
+[32m+[m[32m                               forks: int, language: str, has_wiki: bool) -> str:[m
+[32m+[m[32m    """Generate prompt for individual repository analysis"""[m
+[32m+[m[41m    [m
+[32m+[m[32m    prompt = f"""Analyze this GitHub repository and provide insights:[m
+[32m+[m
+[32m+[m[32mRepository: {repo_name}[m
+[32m+[m[32mDescription: {description if description else 'No description provided'}[m
+[32m+[m[32mStars: {stars}[m
+[32m+[m[32mForks: {forks}[m
+[32m+[m[32mLanguage: {language}[m
+[32m+[m[32mHas Wiki: {has_wiki}[m
+[32m+[m
+[32m+[m[32mProvide a brief analysis including:[m
+[32m+[m[32m1. Project quality assessment[m
+[32m+[m[32m2. Difficulty level for contributors[m
+[32m+[m[32m3. Portfolio value (how good this looks on a resume)[m
+[32m+[m[32m4. One specific improvement suggestion[m
+[32m+[m
+[32m+[m[32mKeep response concise and actionable."""[m
+[32m+[m[41m    [m
+[32m+[m[32m    return prompt[m
+[32m+[m
+[32m+[m
+[32m+[m[32mdef get_improvement_suggestions_prompt(portfolio_score: int, strengths: list,[m[41m [m
+[32m+[m[32m                                         weaknesses: list, top_languages: list) -> str:[m
+[32m+[m[32m    """Generate prompt for improvement suggestions"""[m
+[32m+[m[41m    [m
+[32m+[m[32m    prompt = f"""Based on this GitHub portfolio with score {portfolio_score}/100:[m
+[32m+[m
+[32m+[m[32mStrengths: {', '.join(strengths) if strengths else 'Not enough data'}[m
+[32m+[m[32mAreas for improvement: {', '.join(weaknesses) if weaknesses else 'Unknown'}[m
+[32m+[m[32mTop languages: {', '.join(top_languages) if top_languages else 'None'}[m
+[32m+[m
+[32m+[m[32mProvide 3 specific, actionable suggestions to improve their GitHub portfolio.[m
+[32m+[m[32mEach suggestion should include:[m
+[32m+[m[32m- What to do[m
+[32m+[m[32m- Why it matters[m
+[32m+[m[32m- How to implement it[m
+[32m+[m
+[32m+[m[32mFocus on:[m
+[32m+[m[32m1. Increasing project visibility[m
+[32m+[m[32m2. Improving code quality[m
+[32m+[m[32m3. Building community engagement[m
+[32m+[m[32m4. Documentation improvements[m
+[32m+[m
+[32m+[m[32mMake suggestions personalized based on their current tech stack."""[m
+[32m+[m[41m    [m
+[32m+[m[32m    return prompt[m
+\ No newline at end of file[m
+[1mdiff --git a/backend/app/analytics/__init__.py b/backend/app/analytics/__init__.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..e69de29[m
+[1mdiff --git a/backend/app/analytics/__pycache__/__init__.cpython-314.pyc b/backend/app/analytics/__pycache__/__init__.cpython-314.pyc[m
+[1mnew file mode 100644[m
+[1mindex 0000000..23700cc[m
+Binary files /dev/null and b/backend/app/analytics/__pycache__/__init__.cpython-314.pyc differ
+[1mdiff --git a/backend/app/analytics/__pycache__/scorers.cpython-314.pyc b/backend/app/analytics/__pycache__/scorers.cpython-314.pyc[m
+[1mnew file mode 100644[m
+[1mindex 0000000..1d66abe[m
+Binary files /dev/null and b/backend/app/analytics/__pycache__/scorers.cpython-314.pyc differ
+[1mdiff --git a/backend/app/analytics/algorithms.py b/backend/app/analytics/algorithms.py[m
+[1mnew file mode 100644[
